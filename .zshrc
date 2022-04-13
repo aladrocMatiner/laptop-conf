@@ -71,12 +71,18 @@ ZSH_THEME="fino" # set by `omz`
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git
-    autoenv 
-	fzf
-	autojump
-    ubuntu 
-    aws)
+    git
+    fzf
+    aws
+    autoenv
+    systemd
+    docker
+    ansible
+    terraform 
+    tmux 
+    pip 
+    vault 
+    kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -132,4 +138,21 @@ export PATH=$PATH:~/bin/okd
 ####
 alias docker=podman
 alias pd=podman
+
+########
+## openshift
+####
+source <(oc completion zsh)
+
+########
+## Tekton
+####
+source <(tkn completion zsh)
+
+########
+## aws
+####
+export PATH="$PATH:/snap/aws-cli/130/bin"
+source /snap/aws-cli/130/bin/aws_zsh_completer.sh
+
 
