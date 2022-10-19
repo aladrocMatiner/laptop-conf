@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/jromero/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -23,14 +23,13 @@ ZSH_THEME="fino" # set by `omz`
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -45,8 +44,9 @@ ZSH_THEME="fino" # set by `omz`
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -73,6 +73,10 @@ ZSH_THEME="fino" # set by `omz`
 plugins=(
     git
     fzf
+    zsh-interactive-cd
+#    zsh-navigation-tools
+    #zsh-autosuggestions
+    #zsh-syntax-highlighting
     aws
     autoenv
     systemd
@@ -116,43 +120,55 @@ source $ZSH/oh-my-zsh.sh
 ## tmux
 ####
 #tmux
-#
-########
-## General Binaries§
-####
-export PATH=$PATH:~/bin/
-
-#######
-## OC Binaries
-####
-export PATH=$PATH:~/bin/oc
 
 ########
-## Openshift
-#####
-export PATH=$PATH:~/bin/ose
-export PATH=$PATH:~/bin/okd
+## Infra binaries
+####
+export PATH=$PATH:~/infra/bin/current
+
+########
+## openshift
+####
+if [ $commands[oc] ]; then
+    source <(oc completion zsh)
+    compdef _oc oc
+fi
+########
+## Tekton
+####
+if [ $commands[tkn] ]; then
+    source <(tkn completion zsh)
+    compdef _tkn tkn
+fi
 
 ######
 ## Podman
 ####
 alias docker=podman
 alias pd=podman
+alias dk=podman
+autoload -U compinit; compinit
 
 ########
-## openshift
-####
-source <(oc completion zsh)
+## Kubectl krew
+####                                            
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 
 ########
-## Tekton
+## fzf
 ####
-source <(tkn completion zsh)
+#bindkey '^I' fzf_completion
+########
+## noobaa
+####
+if [ $commands[noobaa] ]; then
+    source <(noobaa completion | sed --expression='s/type -t/whence -w/g')
+#    compdef _noobaa noobaa
+fi
 
 ########
-## aws
+## kubectx
 ####
-export PATH="$PATH:/snap/aws-cli/130/bin"
-source /snap/aws-cli/130/bin/aws_zsh_completer.sh
-
+autoload -U compinit && compinit
 
