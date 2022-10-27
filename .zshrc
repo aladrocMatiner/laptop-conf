@@ -133,12 +133,21 @@ if [ $commands[oc] ]; then
     source <(oc completion zsh)
     compdef _oc oc
 fi
+
 ########
 ## Tekton
 ####
 if [ $commands[tkn] ]; then
     source <(tkn completion zsh)
     compdef _tkn tkn
+fi
+
+########
+## crc
+####
+if [ $commands[crc] ]; then
+    source <(crc completion zsh)
+    compdef _crc crc
 fi
 
 ######
