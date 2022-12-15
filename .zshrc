@@ -181,3 +181,5 @@ fi
 ####
 autoload -U compinit && compinit
 
+alias kns=kubectl-ns
+alias ktx=kubectl-ctx
