@@ -394,6 +394,10 @@ bind -n M-Down select-pane -D
 bind -n S-Left previous-window
 bind -n S-Right next-window
 
+## experimental
+#bind-key -r < swap-window -t -
+#bind-key -r > swap-window -t +
+
 
 
 # -- custom variables ----------------------------------------------------------
