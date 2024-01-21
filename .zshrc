@@ -183,3 +183,23 @@ autoload -U compinit && compinit
 
 alias kns=kubectl-ns
 alias ktx=kubectl-ctx
+
+########
+## Prompt
+####
+#PS1="%n %1~ %# "
+
+########
+## Krew
+####
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+########
+## Golang
+####
+export XDG_CONFIG_HOME=$HOME/.config
+
+########
+## Openvpn
+####
+export PATH=$(brew --prefix openvpn)/sbin:$PATH
