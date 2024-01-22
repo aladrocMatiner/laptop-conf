@@ -203,3 +203,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 ## Openvpn
 ####
 export PATH=$(brew --prefix openvpn)/sbin:$PATH
+
+########
+## Bin
+####
+export PATH=$PATH:/Users/joe/bin/current
